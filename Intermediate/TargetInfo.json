@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "CloneProject",
+			"Path": "..\\Source\\CloneProject.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "CloneProjectEditor",
+			"Path": "..\\Source\\CloneProjectEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

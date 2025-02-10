@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"E:\\CloneProject\\Source\\CloneProject\\CloneProject.Build.cs",
+		"E:\\CloneProject\\Source\\CloneProject.Target.cs",
+		"E:\\CloneProject\\Source\\CloneProjectEditor.Target.cs"
+	],
+	"EngineVersion": "5.4.4"
+}
