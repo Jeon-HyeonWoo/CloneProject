@@ -11,6 +11,9 @@
     <None Include="..\..\Source\CloneProjectEditor.Target.cs">
       <Filter>Source</Filter>
     </None>
+    <None Include="..\..\.gitattributes" />
+    <None Include="..\..\.gitignore" />
+    <None Include="..\..\.vsconfig" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
     </Filter>
@@ -29,6 +32,12 @@
     <Filter Include="Source\CloneProject">
       <UniqueIdentifier>{B8FB88DE-A955-3655-9911-6B72FFFCD7B6}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\CloneProject\CloneLogChannels.cpp">
+      <Filter>Source\CloneProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\CloneLogChannels.h">
+      <Filter>Source\CloneProject</Filter>
+    </ClInclude>
     <None Include="..\..\Source\CloneProject\CloneProject.Build.cs">
       <Filter>Source\CloneProject</Filter>
     </None>
@@ -37,6 +46,15 @@
     </ClCompile>
     <ClInclude Include="..\..\Source\CloneProject\CloneProject.h">
       <Filter>Source\CloneProject</Filter>
+    </ClInclude>
+    <Filter Include="Source\CloneProject\System">
+      <UniqueIdentifier>{4A0EE0EB-87EB-3A86-9E6A-9F52570990B5}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\CloneProject\System\CloneAssetManager.cpp">
+      <Filter>Source\CloneProject\System</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\System\CloneAssetManager.h">
+      <Filter>Source\CloneProject\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
