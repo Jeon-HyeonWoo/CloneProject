@@ -8,7 +8,16 @@ public class CloneProject : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
+		PublicDependencyModuleNames.AddRange(new string[] { 
+			"Core",
+			"CoreUObject",
+			"Engine",
+			"InputCore",
+			"EnhancedInput",
+			"GameplayTags",	//Game Ability System //PlugIn
+			"ModularGameplay",	//Game Features // PlugIn
+			"GameFeatures", //
+		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

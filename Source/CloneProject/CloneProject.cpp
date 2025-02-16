@@ -21,3 +21,6 @@ void FCloneProjectModule::ShutdownModule()
 }
 
 IMPLEMENT_PRIMARY_GAME_MODULE(FCloneProjectModule, CloneProject, "CloneProject" );
+/*
+	Added PlugIn : Modular GamePlay, Game Features, Gameplay Abilities
+*/

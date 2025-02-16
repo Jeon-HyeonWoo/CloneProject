@@ -22,7 +22,7 @@
 	return을 하는 이유는 Return 형식을 맞추기 위함.
 **/
 
-UCLASS()
+UCLASS()									//PrimaryAsset's load, unload
 class CLONEPROJECT_API UCloneAssetManager : public UAssetManager
 {
 	GENERATED_BODY()
