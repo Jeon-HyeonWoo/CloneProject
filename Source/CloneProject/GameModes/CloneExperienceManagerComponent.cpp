@@ -138,3 +138,13 @@ void UCloneExperienceManagerComponent::OnExperienceFullLoadCompleted()
 	OnExperienceLoaded.Broadcast(CurrentExperience);
 	OnExperienceLoaded.Clear();
 }
+
+const UCloneExperienceDefinition* UCloneExperienceManagerComponent::GetCurrentExperienceChecked() const
+{
+	//Loading is finished?
+	check(LoadState == ECloneExperienceLoadState::Loaded);
+	//CurrentExperience isn't nullptr?
+	check(CurrentExperience != nullptr);
+
+	return CurrentExperience;
+}

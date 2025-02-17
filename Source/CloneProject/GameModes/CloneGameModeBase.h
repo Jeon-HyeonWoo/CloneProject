@@ -7,10 +7,21 @@
 #include "CloneGameModeBase.generated.h"
 
 /**
- * 
- */
+*  정리
+* 1. GameMode생성 이후 InitGame내부에서 다음 프레임(SetNextFrame)에 HandleMatchAssignmentIfNotExpectingOne을 실행한다.
+* 2. InitGameState에서 CallorRegistr_OnExperienceLoaded에서 ExperienceManager를 통해 
+*		Experience가 Loading이 완료가 된다면, OnExperienceLoaded를 호출하도록 Delegate를 설정.
+* 3. ExperienceMangerComponent가 생성된 시점 
+* 4. HandleMatchAssignmentIfNotExpectingOne 실행 (Default Experience 설정) 및 Given실행
+* 5. OnMatchAssignmentGiven에서는 PrimaryId(ExperienceId)를 가지고 SetCurrentExperience실행
+* 6. SetCurrentExperience에서는 Id를 가지고 경로를 받아온다음 Experience를 TryLoad 
+* 7. CDO를 가져와서 분류한 후 다시 Load
+* 8. Load가 완료가 된다면, FullLoadComplete에서 Delegate를 BroadCast.
+* 9. OnExperienceLoaded가 BroadCasting되면 불려지면서,  Pawn, and Controller 설정. PlayerState는 해당 Pawn, Controller를 Casing
+*/
 
 class UCloneExperienceDefinition;
+class UClonePawnData;
 
 UCLASS()
 class CLONEPROJECT_API ACloneGameModeBase : public AGameModeBase
@@ -24,6 +35,9 @@ public:
 	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
 	virtual void InitGameState() final;
 
+	/** GetDefualtPawnClassForController **/
+	virtual UClass* GetDefaultPawnClassForController_Implementation(AController* InController) final;
+
 	//Implementation이 없는 건 Blueprint Only, 있는건 C++영역
 	virtual void HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer) final;
 
@@ -33,6 +47,7 @@ public:
 	void OnMatchAssignmentGiven(FPrimaryAssetId ExperienceId);
 	bool IsExperienceLoaded() const;
 	void OnExperienceLoaded(const UCloneExperienceDefinition* CurrentExperience);
+	const UClonePawnData* GetPawnDataForController(const AController* InController) const;
 };
 
 /*
@@ -83,4 +98,7 @@ public:
 	10. 분류된 Bundle이 Loaded가 된다면, OnExperienceLoadComplete를 호출
 
 	11. 현재 Loading이 완료된 CurrentExperience를 BroadCast로 보내줘서 GameMode의 PlayerState에 정보를 보내줘서 초기화가 진행된다.
+
+	12. Loading이 된 Experience의 정보를 통해 GameMode에서 막아두었던 GameModeSetting에 필요한 것들을 Loading하기 시작한다.
+	* Experience에서 
 */

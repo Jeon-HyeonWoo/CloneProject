@@ -8,7 +8,10 @@
 #include "CloneProject/Player/ClonePlayerState.h"
 #include "CloneProject/Character/CloneCharacter.h"
 #include "CloneProject/GameModes/CloneExperienceManagerComponent.h"
+#include "CloneProject/GameModes/CloneExperienceDefinition.h"
 #include "CloneProject/CloneLogChannels.h"
+#include "CloneProject/Character/ClonePawnData.h"
+
 
 ACloneGameModeBase::ACloneGameModeBase()
 {
@@ -47,6 +50,20 @@ void ACloneGameModeBase::InitGameState()
 
 	//OnExperienceLoaded 등록
 	ExperienceManagerComponent->CallOrRegister_OnExperienceLoaded(FOnCloneExperienceLoaded::FDelegate::CreateUObject(this, &ThisClass::OnExperienceLoaded));
+}
+
+UClass* ACloneGameModeBase::GetDefaultPawnClassForController_Implementation(AController* InController)
+{
+	if (const UClonePawnData* PawnData = GetPawnDataForController(InController))
+	{
+		if (PawnData->PawnClass)
+		{
+			return PawnData->PawnClass;
+		}
+	}
+
+	//return DefaultPawnClass::StaticClass();
+	return Super::GetDefaultPawnClassForController_Implementation(InController);
 }
 
 void ACloneGameModeBase::HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer)
@@ -115,4 +132,53 @@ bool ACloneGameModeBase::IsExperienceLoaded() const
 
 void ACloneGameModeBase::OnExperienceLoaded(const UCloneExperienceDefinition* CurrentExperience)
 {
+	//World상에 있는 모든 PlayerController를 순회하며 ReStart를 해준다. 
+	for (FConstPlayerControllerIterator Iterator = GetWorld()->GetPlayerControllerIterator(); Iterator; ++Iterator)
+	{
+		APlayerController* PC = Cast<APlayerController>(*Iterator);
+
+		if (PC && PC->GetPawn() == nullptr)
+		{
+			if (PlayerCanRestart(PC))
+			{
+				/*
+					ReStartPlayer : FindPlayerStart(StartSpot) -> SpawnDefaultPawn -> SetPawn(DefaultPawn)
+					Experience가 생성이 될 때 까지, GameMode에서 막아둔 FindSpot, PawnSetting, Spawn등을 
+					Loaded가 되었으니 다시 시행하여 설정해둔 DefualtPawn을 소환하는 것.
+				*/
+				RestartPlayer(PC);
+			}
+		}
+	}
+}
+
+const UClonePawnData* ACloneGameModeBase::GetPawnDataForController(const AController* InController) const
+{
+	//PlayerState에 이미 PawnData가 존재한다면 PawnData를 Return.
+	if (InController)
+	{
+		if (const AClonePlayerState* ClonePS = InController->GetPlayerState<AClonePlayerState>())
+		{
+			if (const UClonePawnData* PawnData = ClonePS->GetPawnData<UClonePawnData>())
+			{
+				return PawnData;
+			}
+		}
+	}
+	
+	check(GameState);
+
+	UCloneExperienceManagerComponent* ExperienceManagerComponent = GameState->FindComponentByClass<UCloneExperienceManagerComponent>();
+	check(ExperienceManagerComponent);
+
+	if (ExperienceManagerComponent->IsExperienceLoaded())
+	{
+		const UCloneExperienceDefinition* Experience = ExperienceManagerComponent->GetCurrentExperienceChecked();
+		if (Experience->DefaultPawnData)
+		{
+			return Experience->DefaultPawnData;
+		}
+	}
+
+	return nullptr;
 }

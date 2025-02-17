@@ -52,6 +52,7 @@ public:
 	void StartExperienceLoad();
 	void OnExperienceLoadComplete();
 	void OnExperienceFullLoadCompleted();
+	const UCloneExperienceDefinition* GetCurrentExperienceChecked() const;
 
 public: 
 	
