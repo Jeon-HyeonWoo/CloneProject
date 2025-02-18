@@ -26,12 +26,21 @@
     <None Include="..\..\Config\DefaultGame.ini">
       <Filter>Config</Filter>
     </None>
+    <None Include="..\..\Config\DefaultGameplayTags.ini">
+      <Filter>Config</Filter>
+    </None>
     <None Include="..\..\Config\DefaultInput.ini">
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\CloneProject">
       <UniqueIdentifier>{B8FB88DE-A955-3655-9911-6B72FFFCD7B6}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\CloneProject\CloneGamePlayTags.cpp">
+      <Filter>Source\CloneProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\CloneGamePlayTags.h">
+      <Filter>Source\CloneProject</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\CloneProject\CloneLogChannels.cpp">
       <Filter>Source\CloneProject</Filter>
     </ClCompile>
@@ -56,10 +65,22 @@
     <ClInclude Include="..\..\Source\CloneProject\Character\CloneCharacter.h">
       <Filter>Source\CloneProject\Character</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\CloneProject\Character\CloneHeroComponent.cpp">
+      <Filter>Source\CloneProject\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\Character\CloneHeroComponent.h">
+      <Filter>Source\CloneProject\Character</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\CloneProject\Character\ClonePawnData.cpp">
       <Filter>Source\CloneProject\Character</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\CloneProject\Character\ClonePawnData.h">
+      <Filter>Source\CloneProject\Character</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CloneProject\Character\ClonePawnExtensionComponent.cpp">
+      <Filter>Source\CloneProject\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\Character\ClonePawnExtensionComponent.h">
       <Filter>Source\CloneProject\Character</Filter>
     </ClInclude>
     <Filter Include="Source\CloneProject\GameModes">
@@ -119,5 +140,12 @@
     <ClInclude Include="..\..\Source\CloneProject\System\CloneAssetManager.h">
       <Filter>Source\CloneProject\System</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\CloneProject\System\CloneGameInstance.cpp">
+      <Filter>Source\CloneProject\System</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\System\CloneGameInstance.h">
+      <Filter>Source\CloneProject\System</Filter>
+    </ClInclude>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

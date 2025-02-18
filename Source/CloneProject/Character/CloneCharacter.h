@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "CloneCharacter.generated.h"
 
+class UClonePawnExtensionComponent;
+
 UCLASS()
 class CLONEPROJECT_API ACloneCharacter : public ACharacter
 {
@@ -25,5 +27,10 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+public:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Clone|Character")
+	TObjectPtr<UClonePawnExtensionComponent> PawnExtComponent;
 
 };

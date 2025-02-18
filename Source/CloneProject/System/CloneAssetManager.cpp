@@ -2,6 +2,7 @@
 
 #include "CloneAssetManager.h"
 #include "CloneProject/CloneLogChannels.h"
+#include "CloneProject/CloneGamePlayTags.h"
 
 
 
@@ -29,12 +30,16 @@ UCloneAssetManager& UCloneAssetManager::Get()
 	해당 매크로 사용시 이 부분을 제외하고 Development로 빌드한다.
 	따라서 필요에 따라 이 부분은 빌드를 꼭 하고 가야한다는 뜻.
 */
+// this method is Called, Before open Editor
 PRAGMA_DISABLE_OPTIMIZATION
 void UCloneAssetManager::StartInitialLoading()
 {
 	//기본적으로 Unreal은 Multi Thead 코딩을 지원한다.
 	//단 Editor가 켜지기 전 까지는 Multi Thread상황에 safe 하지 않는다.
 	Super::StartInitialLoading();
+
+	//Add All Native Tags
+	FCloneGameplayTags::InitializeNatvieTags();
 }
 PRAGMA_ENABLE_OPTIMIZATION
 

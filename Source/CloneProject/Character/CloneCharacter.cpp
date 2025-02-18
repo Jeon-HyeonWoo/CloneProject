@@ -3,12 +3,17 @@
 
 #include "CloneCharacter.h"
 
+#include "CloneProject/Character/ClonePawnExtensionComponent.h"
+
 // Sets default values
 ACloneCharacter::ACloneCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bStartWithTickEnabled = false;
+	PrimaryActorTick.bCanEverTick = false;
 
+	//Create PawnExtensionComponent
+	PawnExtComponent = CreateDefaultSubobject<UClonePawnExtensionComponent>(TEXT("PawnExtensionComponent"));
 }
 
 // Called when the game starts or when spawned
