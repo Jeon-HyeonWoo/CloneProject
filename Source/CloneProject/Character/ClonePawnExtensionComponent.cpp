@@ -76,6 +76,7 @@ void UClonePawnExtensionComponent::BeginPlay()
 		ForceUpdateInitState : 강제 업데이트
 	*/
 	CheckDefaultInitialization();
+
 }
 
 //instnace의 파괴, 소멸 시점.
@@ -95,10 +96,96 @@ void UClonePawnExtensionComponent::OnActorInitStateChanged(const FActorInitState
 
 bool UClonePawnExtensionComponent::CanChangeInitState(UGameFrameworkComponentManager* Manager, FGameplayTag CurrentState, FGameplayTag DesiredState) const
 {
-	return IGameFrameworkInitStateInterface::CanChangeInitState(Manager, CurrentState, DesiredState);
+	check(Manager);
+
+	APawn* Pawn = GetPawn<APawn>();
+
+	const FCloneGameplayTags& InitTags = FCloneGameplayTags::Get();
+
+	//CurrentState가 존재하지 않고, Bcuz : InitState_Spawned이 제일 초기부분, 바꾸려는 State가 Spawned인가?
+	if (!CurrentState.IsValid() && DesiredState == InitTags.InitState_Spawned)
+	{
+		if (Pawn)
+		{
+			return true;
+		}
+	}
+
+	if (CurrentState == InitTags.InitState_Spawned && DesiredState == InitTags.InitState_DataAvailable)
+	{
+		if (!PawnData)
+		{
+			return false;
+		}
+
+		const bool bIsLocallyControlled = Pawn->IsLocallyControlled();
+		if (bIsLocallyControlled)
+		{
+			if (!GetController<AController>())
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	if (CurrentState == InitTags.InitState_DataAvailable && DesiredState == InitTags.InitState_DataInitialized)
+	{
+		/*
+			HaveAll
+			- Actor에 Bind된 모든 Feature(Component)들이 DataAvailable 상태일 때, DataInitialized로 넘어간다.
+		*/
+		return Manager->HaveAllFeaturesReachedInitState(Pawn, InitTags.InitState_DataAvailable);
+	}
+
+	if (CurrentState == InitTags.InitState_DataInitialized && DesiredState == InitTags.InitState_GameplayReady)
+	{
+		return true;
+	}
+
+
+	return false;
 }
 
 void UClonePawnExtensionComponent::CheckDefaultInitialization()
 {
-	IGameFrameworkInitStateInterface::CheckDefaultInitialization();
+	/*
+		implementers = this;
+		MyActor = Owner;
+
+		내부 코드 요약 : 
+		
+		- GetAllFeatureImplemeters(Implementers, MyActor, FGameplayTag(), MyFeatureName)
+		를 통해 MyFeatureName(this Component)를 제외한 MyActor의 Component들을 가져온다.
+
+		- 해당 Component들에 대해 CheckDefaultINitialization()을 호출.
+		
+	*/
+	CheckDefaultInitializationForImplementers();
+	
+
+	const FCloneGameplayTags& InitTags = FCloneGameplayTags::Get();
+
+	/*
+	* 사용자 정의 InitState를 직접 넘겨주기 위한 TagArray
+	*/
+	static const TArray<FGameplayTag> StateChain = { 
+		InitTags.InitState_Spawned, 
+		InitTags.InitState_DataAvailable, 
+		InitTags.InitState_DataInitialized,
+		InitTags.InitState_GameplayReady
+	};
+
+	/*
+		내부 코드 요약 :
+		- 해당 Feature의 State가 CurrentState와 맞는지 체크
+		- if(CanChangeInitState)를 통해 Update가 가능한 범위까지 계속 체크를 한다.
+	*/
+	ContinueInitStateChain(StateChain);
+
+	/*
+		CheckDefaultInitalizationForImplementers() = 나를 제외한 소유 Actor의 모든 Component의 상태
+		ContinueInitStateChiain() = 나의 상태를 StateChain의 속성을 넣어 상태 체크
+	*/
 }
