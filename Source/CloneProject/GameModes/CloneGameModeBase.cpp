@@ -11,6 +11,7 @@
 #include "CloneProject/GameModes/CloneExperienceDefinition.h"
 #include "CloneProject/CloneLogChannels.h"
 #include "CloneProject/Character/ClonePawnData.h"
+#include "CloneProject/Character/ClonePawnExtensionComponent.h"
 
 
 ACloneGameModeBase::ACloneGameModeBase()
@@ -83,9 +84,31 @@ void ACloneGameModeBase::HandleStartingNewPlayer_Implementation(APlayerControlle
 
 APawn* ACloneGameModeBase::SpawnDefaultPawnAtTransform_Implementation(AController* NewPlayer, const FTransform& SpawnTransform)
 {
+	FActorSpawnParameters SpawnInfo;
+	SpawnInfo.Instigator = GetInstigator();
+	SpawnInfo.ObjectFlags |= RF_Transient;
+	SpawnInfo.bDeferConstruction = true;
+
+	if (UClass* PawnClass = GetDefaultPawnClassForController(NewPlayer))
+	{
+		if (APawn* SpawnedPawn = GetWorld()->SpawnActor<APawn>(PawnClass, SpawnTransform, SpawnInfo))
+		{
+			if (UClonePawnExtensionComponent* PawnExtComp = UClonePawnExtensionComponent::FindPawnExtensionComponent(SpawnedPawn))
+			{
+				if (const UClonePawnData* PawnData = GetPawnDataForController(NewPlayer))
+				{
+					PawnExtComp->SetPawnData(PawnData);
+				}
+			}
+
+			SpawnedPawn->FinishSpawning(SpawnTransform);
+			return SpawnedPawn;
+		}
+	}
+
+
 	UE_LOG(LogClone, Log, TEXT("SpawnDefaultPawnAtTransform_Implementation is called")); //Spawn Pawn
-	return Super::SpawnDefaultPawnAtTransform_Implementation(NewPlayer, SpawnTransform);
-	
+	return nullptr;
 }
 
 /*

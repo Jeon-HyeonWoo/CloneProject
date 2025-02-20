@@ -91,7 +91,19 @@ void UClonePawnExtensionComponent::EndPlay(const EEndPlayReason::Type EndPlayRea
 
 void UClonePawnExtensionComponent::OnActorInitStateChanged(const FActorInitStateChangedParams& Params)
 {
-	IGameFrameworkInitStateInterface::OnActorInitStateChanged(Params);
+	//Components.FeatureName != This.FeatureName
+	if (Params.FeatureName != NAME_ActorFeatureName)
+	{
+		const FCloneGameplayTags& InitTags = FCloneGameplayTags::Get();
+		//OtherComponents.FeatureState == Available
+		if (Params.FeatureState == InitTags.InitState_DataAvailable)
+		{
+			//function : OtherComponents proceed as far as possible to the State
+			CheckDefaultInitialization();
+		}
+
+	}
+
 }
 
 bool UClonePawnExtensionComponent::CanChangeInitState(UGameFrameworkComponentManager* Manager, FGameplayTag CurrentState, FGameplayTag DesiredState) const
@@ -111,13 +123,16 @@ bool UClonePawnExtensionComponent::CanChangeInitState(UGameFrameworkComponentMan
 		}
 	}
 
+	
 	if (CurrentState == InitTags.InitState_Spawned && DesiredState == InitTags.InitState_DataAvailable)
 	{
+		//PawnData는 GameMode에서 casing
 		if (!PawnData)
 		{
 			return false;
 		}
 
+		//SetupInputComponent의 호출은 Character의 Possess가 호출이 되었다는 것.
 		const bool bIsLocallyControlled = Pawn->IsLocallyControlled();
 		if (bIsLocallyControlled)
 		{
@@ -161,6 +176,7 @@ void UClonePawnExtensionComponent::CheckDefaultInitialization()
 
 		- 해당 Component들에 대해 CheckDefaultINitialization()을 호출.
 		
+		요약 : 나를 제외한, 모든 Component들의 CheckDefaultInitialization호출.
 	*/
 	CheckDefaultInitializationForImplementers();
 	
@@ -188,4 +204,27 @@ void UClonePawnExtensionComponent::CheckDefaultInitialization()
 		CheckDefaultInitalizationForImplementers() = 나를 제외한 소유 Actor의 모든 Component의 상태
 		ContinueInitStateChiain() = 나의 상태를 StateChain의 속성을 넣어 상태 체크
 	*/
+}
+
+void UClonePawnExtensionComponent::SetPawnData(const UClonePawnData* InPawnData)
+{
+	APawn* Pawn = GetPawnChecked<APawn>();
+
+	if (Pawn->GetLocalRole() != ROLE_Authority)
+	{
+		return;
+	}
+
+	if (PawnData)
+	{
+		return;
+	}
+
+	PawnData = InPawnData;
+}
+
+void UClonePawnExtensionComponent::SetupPlayerInputComponent()
+{
+	//자기 자신에 대한 강제 업데이트
+	CheckDefaultInitialization(); 
 }

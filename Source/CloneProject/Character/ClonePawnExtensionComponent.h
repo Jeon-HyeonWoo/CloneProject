@@ -43,6 +43,18 @@ public:
 	/* for PawnData Casing */
 	UPROPERTY(EditInstanceOnly, Category = "Clone|Pawn")
 	TObjectPtr<const UClonePawnData> PawnData;
+
+	/*
+		MemberMethods
+	*/
+
+	static UClonePawnExtensionComponent* FindPawnExtensionComponent(const AActor* Actor) {
+		return Actor ? Actor->FindComponentByClass<UClonePawnExtensionComponent>() : nullptr;
+	}
+	template<class T>
+	const T* GetPawnData() const { return Cast<T>(PawnData); }
+	void SetPawnData(const UClonePawnData* InPawnData);
+	void SetupPlayerInputComponent();
 };
 
 /*

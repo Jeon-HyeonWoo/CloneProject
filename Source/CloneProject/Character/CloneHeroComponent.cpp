@@ -61,7 +61,21 @@ void UCloneHeroComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 void UCloneHeroComponent::OnActorInitStateChanged(const FActorInitStateChangedParams& Params)
 {
-	IGameFrameworkInitStateInterface::OnActorInitStateChanged(Params);
+	/*
+		Params's role = Find Other Component through feature name or state 
+	*/
+	const FCloneGameplayTags& InitTags = FCloneGameplayTags::Get();
+
+	//Find ExtComp
+	if (Params.FeatureName == UClonePawnExtensionComponent::NAME_ActorFeatureName)
+	{
+		//ExtComp's State = Initialized?
+		if (Params.FeatureState == InitTags.InitState_DataInitialized)
+		{
+			//proceed change state to possible
+			CheckDefaultInitialization();
+		}
+	}
 }
 
 bool UCloneHeroComponent::CanChangeInitState(UGameFrameworkComponentManager* Manager, FGameplayTag CurrentState, FGameplayTag DesiredState) const
@@ -72,21 +86,68 @@ bool UCloneHeroComponent::CanChangeInitState(UGameFrameworkComponentManager* Man
 	APawn* Pawn = GetPawn<APawn>();
 	AClonePlayerState* ClonePS = GetPlayerState<AClonePlayerState>();
 
+	//Spawned 초기화
 	if (!CurrentState.IsValid() && DesiredState == InitTags.InitState_Spawned)
 	{
 		if (Pawn)
 		{
-
+			return true;
 		}
 	}
 
+	//Spanwed -> DataAvailable
+	if (CurrentState == InitTags.InitState_Spawned && DesiredState == InitTags.InitState_DataAvailable)
+	{
+		if (!ClonePS)
+		{
+			return false;
+		}
 
-	return IGameFrameworkInitStateInterface::CanChangeInitState(Manager, CurrentState, DesiredState);
+		return true;
+	}
+
+	//DataAvailable -> DataInitialized
+	if (CurrentState == InitTags.InitState_DataAvailable && DesiredState == InitTags.InitState_DataInitialized)
+	{
+		/*
+			PawnExtComp가 DataInitailized일 때 승인
+			Pawn에 있는, ExtComponent::Name이, InitState_Step일때 InitState를 진행.
+			함수이름대로 1. Pawn 가지고 있는 2. Feature(Component)가 3.InitState에 도달했다면, 
+		*/
+		return ClonePS && Manager->HasFeatureReachedInitState(Pawn, UClonePawnExtensionComponent::NAME_ActorFeatureName, InitTags.InitState_DataInitialized);
+	}
+	
+	if (CurrentState == InitTags.InitState_DataInitialized && DesiredState == InitTags.InitState_GameplayReady)
+	{
+		return true;
+	}
+
+
+	return false;
 }
 
 void UCloneHeroComponent::HandleChangeInitState(UGameFrameworkComponentManager* Manager, FGameplayTag CurrentState, FGameplayTag DesiredState)
 {
-	IGameFrameworkInitStateInterface::HandleChangeInitState(Manager, CurrentState, DesiredState);
+	const FCloneGameplayTags& InitTags = FCloneGameplayTags::Get();
+
+	if (CurrentState == InitTags.InitState_DataAvailable && DesiredState == InitTags.InitState_DataInitialized)
+	{
+		APawn* Pawn = GetPawn<APawn>();
+		AClonePlayerState* ClonePS = GetPlayerState<AClonePlayerState>();
+		if (!ensure(Pawn && ClonePS))
+		{
+			return;
+		}
+
+		//TODO : Input, Camera Handling ..
+
+		const bool bIsLocallyControlled = Pawn->IsLocallyControlled();
+		const UClonePawnData* PawnData = nullptr;
+		if (UClonePawnExtensionComponent* PawnExtComp = UClonePawnExtensionComponent::FindPawnExtensionComponent(Pawn))
+		{
+			PawnData = PawnExtComp->GetPawnData<UClonePawnData>();
+		}
+	}
 }
 
 void UCloneHeroComponent::CheckDefaultInitialization()

@@ -35,5 +35,7 @@ void ACloneCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	PawnExtComponent->SetupPlayerInputComponent();
+
 }
 
