@@ -8,6 +8,10 @@
 #include "CloneProject/Character/ClonePawnExtensionComponent.h"
 #include "CloneProject/Player/ClonePlayerState.h"
 #include "Components/GameFrameworkComponentManager.h"
+#include "CloneProject/Character/ClonePawnData.h"
+
+#include "CloneProject/Camera/CloneCameraMode.h"
+#include "CloneProject/Camera/CloneCameraComponent.h"
 
 
 const FName UCloneHeroComponent::Name_ActorFeatureName("HeroComponent");
@@ -147,6 +151,14 @@ void UCloneHeroComponent::HandleChangeInitState(UGameFrameworkComponentManager* 
 		{
 			PawnData = PawnExtComp->GetPawnData<UClonePawnData>();
 		}
+
+		if (bIsLocallyControlled && PawnData)
+		{
+			if (UCloneCameraComponent* CameraComponent = UCloneCameraComponent::FindCameraComponent(Pawn))
+			{
+				CameraComponent->DetermineCameraModeDelegate.BindUObject(this, &ThisClass::DetermineCameraMode);
+			}
+		}
 	}
 }
 
@@ -168,5 +180,29 @@ void UCloneHeroComponent::CheckDefaultInitialization()
 	};
 
 	ContinueInitStateChain(StateChain);
+}
+
+TSubclassOf<UCloneCameraMode> UCloneHeroComponent::DetermineCameraMode() const
+{
+	const APawn* Pawn = GetPawn<APawn>();
+
+	//HeroComponent가 Owner Pawn이 없다면 nullptr
+	if (!Pawn)
+	{
+		return nullptr;
+	}
+
+	//HeroComponent's OwnerPawn's ExtComp for Get PawnData
+	if (UClonePawnExtensionComponent* PawnExtComp = UClonePawnExtensionComponent::FindPawnExtensionComponent(Pawn))
+	{
+		//for Get DefaultCameraMode of PawnClass
+		if (const UClonePawnData* PawnData = PawnExtComp->GetPawnData<UClonePawnData>())
+		{
+			return PawnData->DefaultCameraMode;
+		}
+		
+	}
+
+	return nullptr;
 }
 

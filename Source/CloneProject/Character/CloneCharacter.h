@@ -7,6 +7,7 @@
 #include "CloneCharacter.generated.h"
 
 class UClonePawnExtensionComponent;
+class UCloneCameraComponent;
 
 UCLASS()
 class CLONEPROJECT_API ACloneCharacter : public ACharacter
@@ -33,4 +34,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Clone|Character")
 	TObjectPtr<UClonePawnExtensionComponent> PawnExtComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Clone|Character")
+	TObjectPtr<UCloneCameraComponent> CameraComponent;
 };

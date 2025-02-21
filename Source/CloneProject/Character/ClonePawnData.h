@@ -6,6 +6,7 @@
 #include "Engine/DataAsset.h"
 #include "ClonePawnData.generated.h"
 
+class UCloneCameraMode;
 /**
  * 
  */
@@ -21,4 +22,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Clone|Pawn")
 	TSubclassOf<APawn> PawnClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Clone|Camera")
+	TSubclassOf<UCloneCameraMode> DefaultCameraMode;
 };

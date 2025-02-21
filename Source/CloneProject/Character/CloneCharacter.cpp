@@ -4,6 +4,7 @@
 #include "CloneCharacter.h"
 
 #include "CloneProject/Character/ClonePawnExtensionComponent.h"
+#include "CloneProject/Camera/CloneCameraComponent.h"
 
 // Sets default values
 ACloneCharacter::ACloneCharacter()
@@ -12,8 +13,18 @@ ACloneCharacter::ACloneCharacter()
 	PrimaryActorTick.bStartWithTickEnabled = false;
 	PrimaryActorTick.bCanEverTick = false;
 
-	//Create PawnExtensionComponent
-	PawnExtComponent = CreateDefaultSubobject<UClonePawnExtensionComponent>(TEXT("PawnExtensionComponent"));
+	
+	{
+		//Create PawnExtensionComponent
+		PawnExtComponent = CreateDefaultSubobject<UClonePawnExtensionComponent>(TEXT("PawnExtensionComponent"));
+	}
+	
+	{
+		//Create CameraComponent
+		CameraComponent = CreateDefaultSubobject<UCloneCameraComponent>(TEXT("CameraComponent"));
+		CameraComponent->SetRelativeLocation(FVector(-300.0f, 0.0f, 75.0f));
+	}
+	
 }
 
 // Called when the game starts or when spawned

@@ -4,6 +4,7 @@
 #include "ClonePlayerState.h"
 
 #include "CloneProject/GameModes/CloneGameModeBase.h"
+#include "CloneProject/Character/ClonePawnData.h"
 #include "CloneProject/GameModes/CloneExperienceManagerComponent.h"
 
 /*

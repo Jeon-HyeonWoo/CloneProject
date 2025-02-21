@@ -7,6 +7,7 @@
 #include "Components/GameFrameworkInitStateInterface.h"
 #include "CloneHeroComponent.generated.h"
 
+class UCloneCameraMode;
 /**
  * Component that sets up input and camera handling for player controlled pawns (or bots that simulate players)
  * - this depends on a pawnextensioncomponent to coordinate initalization
@@ -42,5 +43,6 @@ public:
 	virtual void HandleChangeInitState(UGameFrameworkComponentManager* Manager, FGameplayTag CurrentState, FGameplayTag DesiredState) final;
 	virtual void CheckDefaultInitialization() final;
 
-	
+	/* Member Method Camera*/
+	TSubclassOf<UCloneCameraMode> DetermineCameraMode() const;
 };

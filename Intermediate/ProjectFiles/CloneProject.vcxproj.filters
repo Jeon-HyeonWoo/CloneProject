@@ -56,6 +56,33 @@
     <ClInclude Include="..\..\Source\CloneProject\CloneProject.h">
       <Filter>Source\CloneProject</Filter>
     </ClInclude>
+    <Filter Include="Source\CloneProject\Camera">
+      <UniqueIdentifier>{1989A840-1366-3FCF-AAD2-218DD0CB614B}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\CloneProject\Camera\CloneCameraComponent.cpp">
+      <Filter>Source\CloneProject\Camera</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\Camera\CloneCameraComponent.h">
+      <Filter>Source\CloneProject\Camera</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CloneProject\Camera\CloneCameraMode.cpp">
+      <Filter>Source\CloneProject\Camera</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\Camera\CloneCameraMode.h">
+      <Filter>Source\CloneProject\Camera</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CloneProject\Camera\CloneCameraMode_ThirdPerson.cpp">
+      <Filter>Source\CloneProject\Camera</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\Camera\CloneCameraMode_ThirdPerson.h">
+      <Filter>Source\CloneProject\Camera</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CloneProject\Camera\ClonePlayerCameraManager.cpp">
+      <Filter>Source\CloneProject\Camera</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\Camera\ClonePlayerCameraManager.h">
+      <Filter>Source\CloneProject\Camera</Filter>
+    </ClInclude>
     <Filter Include="Source\CloneProject\Character">
       <UniqueIdentifier>{0475D2DE-A5F4-32F6-8330-1FED8FF26BE1}</UniqueIdentifier>
     </Filter>
@@ -146,6 +173,5 @@
     <ClInclude Include="..\..\Source\CloneProject\System\CloneGameInstance.h">
       <Filter>Source\CloneProject\System</Filter>
     </ClInclude>
-    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

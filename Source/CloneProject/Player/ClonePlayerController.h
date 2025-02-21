@@ -13,5 +13,10 @@ UCLASS()
 class CLONEPROJECT_API AClonePlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+
+public:
+
+	AClonePlayerController(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+
 };
