@@ -6,6 +6,7 @@
 #include "CloneCameraMode.h"
 #include "CloneCameraMode_ThirdPerson.generated.h"
 
+class UCurveVector;
 /**
  * 
  */
@@ -18,4 +19,15 @@ class CLONEPROJECT_API UCloneCameraMode_ThirdPerson : public UCloneCameraMode
 public:
 
 	UCloneCameraMode_ThirdPerson(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	
+	/*
+		CameraMode Interface
+	*/
+	virtual void UpdateView(float DeltaTime) override;
+
+	/*
+		member variables
+	*/
+	UPROPERTY(EditDefaultsOnly, Category = "Third Person")
+	TObjectPtr<const UCurveVector> TargetOffSetCurve;
 };

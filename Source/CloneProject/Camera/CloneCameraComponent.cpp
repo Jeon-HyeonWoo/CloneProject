@@ -28,6 +28,38 @@ void UCloneCameraComponent::GetCameraView(float DeltaTime, FMinimalViewInfo& Des
 	check(CameraModeStack);
 
 	UpdateCameraModes();
+
+	//Blending된 값을 저장
+	FCloneCameraModeView CameraModeView;
+	CameraModeStack->EvaluateStack(DeltaTime, CameraModeView);
+
+	if (APawn* TargetPawn = Cast<APawn>(GetTargetActor()))
+	{
+		if (APlayerController* PC = TargetPawn->GetController<APlayerController>())
+		{
+			PC->SetControlRotation(CameraModeView.ControlRotation);
+		}
+	}
+
+	SetWorldLocationAndRotation(CameraModeView.Location, CameraModeView.Rotation);
+
+	FieldOfView = CameraModeView.FieldOfView;
+
+	DesiredView.Location = CameraModeView.Location;
+	DesiredView.Rotation = CameraModeView.Rotation;
+	DesiredView.FOV = CameraModeView.FieldOfView;
+	DesiredView.OrthoWidth = OrthoWidth;
+	DesiredView.OrthoNearClipPlane = OrthoNearClipPlane;
+	DesiredView.OrthoFarClipPlane = OrthoFarClipPlane;
+	DesiredView.AspectRatio = AspectRatio;
+	DesiredView.bConstrainAspectRatio = bConstrainAspectRatio;
+	DesiredView.bUseFieldOfViewForLOD = bUseFieldOfViewForLOD;
+	DesiredView.ProjectionMode = ProjectionMode;
+	DesiredView.PostProcessBlendWeight = PostProcessBlendWeight;
+	if (PostProcessBlendWeight > 0.0f)
+	{
+		DesiredView.PostProcessSettings = PostProcessSettings;
+	}
 }
 
 void UCloneCameraComponent::UpdateCameraModes()
@@ -41,7 +73,7 @@ void UCloneCameraComponent::UpdateCameraModes()
 		if (TSubclassOf<UCloneCameraMode> CameraMode = DetermineCameraModeDelegate.Execute())
 		{
 			//그 CameraMode를 매 프레임 저장.
-			//CameraModeStack->PushCameraMode(CameraMode);
+			CameraModeStack->PushCameraMode(CameraMode);
 		}
 	}
 }
