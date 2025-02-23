@@ -5,9 +5,11 @@
 #include "CoreMinimal.h"
 #include "Components/PawnComponent.h"
 #include "Components/GameFrameworkInitStateInterface.h"
+#include "CloneProject/Input/CloneMappableConfigPair.h"
 #include "CloneHeroComponent.generated.h"
 
 class UCloneCameraMode;
+struct FCloneMappableConfigPair;
 /**
  * Component that sets up input and camera handling for player controlled pawns (or bots that simulate players)
  * - this depends on a pawnextensioncomponent to coordinate initalization
@@ -45,4 +47,10 @@ public:
 
 	/* Member Method Camera*/
 	TSubclassOf<UCloneCameraMode> DetermineCameraMode() const;
+	/* Member Method Input */
+	void InitializePlayerInput(UInputComponent* PlayerInputComponent);
+
+	/* Member Variable _ Input */
+	UPROPERTY(EditAnywhere)
+	TArray<FCloneMappableConfigPair> DefaultInputConfigs;
 };

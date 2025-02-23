@@ -143,6 +143,27 @@
     <ClInclude Include="..\..\Source\CloneProject\GameModes\CloneUserFacingExperience.h">
       <Filter>Source\CloneProject\GameModes</Filter>
     </ClInclude>
+    <Filter Include="Source\CloneProject\Input">
+      <UniqueIdentifier>{44CD266B-A9D8-337F-AA5B-4E5C840F6873}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\CloneProject\Input\CloneInputComponent.cpp">
+      <Filter>Source\CloneProject\Input</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\Input\CloneInputComponent.h">
+      <Filter>Source\CloneProject\Input</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CloneProject\Input\CloneInputConfig.cpp">
+      <Filter>Source\CloneProject\Input</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\Input\CloneInputConfig.h">
+      <Filter>Source\CloneProject\Input</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CloneProject\Input\CloneMappableConfigPair.cpp">
+      <Filter>Source\CloneProject\Input</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\Input\CloneMappableConfigPair.h">
+      <Filter>Source\CloneProject\Input</Filter>
+    </ClInclude>
     <Filter Include="Source\CloneProject\Player">
       <UniqueIdentifier>{1496C1BA-204D-38CB-9B55-497E12120C50}</UniqueIdentifier>
     </Filter>

@@ -12,6 +12,11 @@
 
 #include "CloneProject/Camera/CloneCameraMode.h"
 #include "CloneProject/Camera/CloneCameraComponent.h"
+#include "CloneProject/Input/CloneInputComponent.h"
+#include "CloneProject/Player/ClonePlayerController.h"
+#include "CloneProject/Input/CloneInputConfig.h"
+#include "PlayerMappableInputConfig.h"
+#include "EnhancedInputSubsystems.h"
 
 
 const FName UCloneHeroComponent::Name_ActorFeatureName("HeroComponent");
@@ -143,7 +148,6 @@ void UCloneHeroComponent::HandleChangeInitState(UGameFrameworkComponentManager* 
 			return;
 		}
 
-		//TODO : Input, Camera Handling ..
 
 		const bool bIsLocallyControlled = Pawn->IsLocallyControlled();
 		const UClonePawnData* PawnData = nullptr;
@@ -152,11 +156,21 @@ void UCloneHeroComponent::HandleChangeInitState(UGameFrameworkComponentManager* 
 			PawnData = PawnExtComp->GetPawnData<UClonePawnData>();
 		}
 
+		//Camera Handling
 		if (bIsLocallyControlled && PawnData)
 		{
 			if (UCloneCameraComponent* CameraComponent = UCloneCameraComponent::FindCameraComponent(Pawn))
 			{
 				CameraComponent->DetermineCameraModeDelegate.BindUObject(this, &ThisClass::DetermineCameraMode);
+			}
+		}
+
+		//Input Handling
+		if (AClonePlayerController* ClonePC = GetController<AClonePlayerController>())
+		{
+			if (Pawn->InputComponent != nullptr)
+			{
+				InitializePlayerInput(Pawn->InputComponent);
 			}
 		}
 	}
@@ -204,5 +218,45 @@ TSubclassOf<UCloneCameraMode> UCloneHeroComponent::DetermineCameraMode() const
 	}
 
 	return nullptr;
+}
+
+void UCloneHeroComponent::InitializePlayerInput(UInputComponent* PlayerInputComponent)
+{
+	check(PlayerInputComponent);
+
+	//Find Pawn
+	const APawn* Pawn = GetPawn<APawn>();
+	if (!Pawn)
+	{
+		return;
+	}
+
+	//for get local player
+	const APlayerController* PC = GetController<APlayerController>();
+	check(PC);
+
+	//for get enhanced input local player subsystem
+	const ULocalPlayer* LP = PC->GetLocalPlayer();
+	check(LP);
+
+	UEnhancedInputLocalPlayerSubsystem* Subsystem = LP->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
+	check(Subsystem); 
+
+	//Clear SubSystem's MappingContext
+	Subsystem->ClearAllMappings();
+
+	if (const UClonePawnExtensionComponent* PawnExtComp = UClonePawnExtensionComponent::FindPawnExtensionComponent(Pawn))
+	{
+		if (const UClonePawnData* PawnData = PawnExtComp->GetPawnData<UClonePawnData>())
+		{
+			if (const UCloneInputConfig* InputConfig = PawnData->InputConfig)
+			{
+				const FCloneGameplayTags& GameplayTags = FCloneGameplayTags::Get();
+
+				
+			}
+		}
+	}
+	
 }
 

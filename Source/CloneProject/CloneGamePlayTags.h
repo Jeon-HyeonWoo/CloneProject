@@ -37,6 +37,12 @@ struct FCloneGameplayTags
 	FGameplayTag InitState_DataInitialized;
 	FGameplayTag InitState_GameplayReady;
 
+	/*
+		Enhanced Input Tags
+	*/
+	FGameplayTag InputTag_Move;
+	FGameplayTag InputTag_Look_Mouse;
+
 private:
 
 	static FCloneGameplayTags GameplayTags;

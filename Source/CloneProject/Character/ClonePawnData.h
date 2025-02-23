@@ -6,6 +6,7 @@
 #include "Engine/DataAsset.h"
 #include "ClonePawnData.generated.h"
 
+class UCloneInputConfig;
 class UCloneCameraMode;
 /**
  * 
@@ -25,4 +26,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Clone|Camera")
 	TSubclassOf<UCloneCameraMode> DefaultCameraMode;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Clone|InputConfig")
+	TObjectPtr<UCloneInputConfig> InputConfig;
 };

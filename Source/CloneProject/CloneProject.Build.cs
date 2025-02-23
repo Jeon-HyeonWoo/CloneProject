@@ -17,6 +17,8 @@ public class CloneProject : ModuleRules
 			"GameplayTags",	//Game Ability System //PlugIn
 			"ModularGameplay",	//Game Features // PlugIn
 			"GameFeatures", //
+			"InputCore",
+			"EnhancedInput"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
