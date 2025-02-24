@@ -32,7 +32,7 @@ public:
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class CLONEPROJECT_API UCloneInputConfig : public UDataAsset
 {
 	GENERATED_BODY()

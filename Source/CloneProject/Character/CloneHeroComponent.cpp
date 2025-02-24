@@ -17,6 +17,7 @@
 #include "CloneProject/Input/CloneInputConfig.h"
 #include "PlayerMappableInputConfig.h"
 #include "EnhancedInputSubsystems.h"
+#include "InputActionValue.h"
 
 
 const FName UCloneHeroComponent::Name_ActorFeatureName("HeroComponent");
@@ -253,10 +254,76 @@ void UCloneHeroComponent::InitializePlayerInput(UInputComponent* PlayerInputComp
 			{
 				const FCloneGameplayTags& GameplayTags = FCloneGameplayTags::Get();
 
-				
+				for (const FCloneMappableConfigPair& Pair : DefaultInputConfigs)
+				{
+					FModifyContextOptions Options = { }; 
+					Options.bIgnoreAllPressedKeysUntilRelease = false;
+
+					Subsystem->AddPlayerMappableConfig(Pair.Config.LoadSynchronous(), Options);
+				}
+
+				UCloneInputComponent* CloneIC = CastChecked<UCloneInputComponent>(PlayerInputComponent);
+				{
+					CloneIC->BindNatvieAction(InputConfig, GameplayTags.InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move, false);
+					CloneIC->BindNatvieAction(InputConfig, GameplayTags.InputTag_Look_Mouse, ETriggerEvent::Triggered, this, &ThisClass::Input_LookMouse, false);
+				}
 			}
 		}
 	}
 	
+}
+
+void UCloneHeroComponent::Input_Move(const FInputActionValue& InputActionValue)
+{
+	APawn* Pawn = GetPawn<APawn>();
+	AController* Controller = Pawn ? Pawn->GetController() : nullptr;
+
+	if (Controller)
+	{
+		const FVector2D Value = InputActionValue.Get<FVector2D>();
+		const FRotator MovementRotation(0.0f, Controller->GetControlRotation().Yaw, 0.0f);
+
+		//X : Right, Left(Negative)
+		if (Value.X != 0.0f)
+		{
+			const FVector MovementDirection = MovementRotation.RotateVector(FVector::RightVector);
+
+			Pawn->AddMovementInput(MovementDirection, Value.X);
+		}
+
+		//Y : Forward, Backward(Negative)
+		if (Value.Y != 0.0f)
+		{
+			const FVector MovementDirection = MovementRotation.RotateVector(FVector::ForwardVector);
+
+			Pawn->AddMovementInput(MovementDirection, Value.Y);
+		}
+	}
+		
+}
+
+void UCloneHeroComponent::Input_LookMouse(const FInputActionValue& InputActionValue)
+{
+	APawn* Pawn = GetPawn<APawn>();
+
+	if (!Pawn)
+	{
+		return;
+	}
+
+	const FVector2D Value = InputActionValue.Get<FVector2D>();
+
+	if (Value.X != 0.0f)
+	{
+		//Yaw = Horizontoal
+		Pawn->AddControllerYawInput(Value.X);
+	}
+
+	if (Value.Y != 0.0f)
+	{
+		//Pitch = Verical
+		double AnimInversionValue = -Value.Y;
+		Pawn->AddControllerPitchInput(AnimInversionValue);
+	}
 }
 

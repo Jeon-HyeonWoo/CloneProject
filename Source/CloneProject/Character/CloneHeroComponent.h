@@ -10,6 +10,7 @@
 
 class UCloneCameraMode;
 struct FCloneMappableConfigPair;
+struct FInputActionValue;
 /**
  * Component that sets up input and camera handling for player controlled pawns (or bots that simulate players)
  * - this depends on a pawnextensioncomponent to coordinate initalization
@@ -47,8 +48,15 @@ public:
 
 	/* Member Method Camera*/
 	TSubclassOf<UCloneCameraMode> DetermineCameraMode() const;
+
 	/* Member Method Input */
 	void InitializePlayerInput(UInputComponent* PlayerInputComponent);
+
+	/*
+	*	Input Func
+	*/
+	void Input_Move(const FInputActionValue& InputActionValue); 
+	void Input_LookMouse(const FInputActionValue& InputActionValue);
 
 	/* Member Variable _ Input */
 	UPROPERTY(EditAnywhere)
