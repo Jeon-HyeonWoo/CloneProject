@@ -32,6 +32,84 @@
     <None Include="..\..\Config\DefaultInput.ini">
       <Filter>Config</Filter>
     </None>
+    <Filter Include="Plugins">
+      <UniqueIdentifier>{BB38096A-B391-30DC-A0D4-4F3EA6B44507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\CommonUser">
+      <UniqueIdentifier>{8716E485-BC4A-3B38-8F39-874ACA390677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\CommonUser\Source">
+      <UniqueIdentifier>{EEB044F2-392C-3506-9A79-6AB8BD3A1A6C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\CommonUser\Source\CommonUser">
+      <UniqueIdentifier>{02CB03AE-D248-3737-8859-DE3608D28AC0}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\CommonUser\Source\CommonUser\CommonUser.Build.cs">
+      <Filter>Plugins\CommonUser\Source\CommonUser</Filter>
+    </None>
+    <Filter Include="Plugins\CommonUser\Source\CommonUser\Private">
+      <UniqueIdentifier>{5D07534E-5D8C-3BD0-8EAA-69F91B8AA007}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Plugins\CommonUser\Source\CommonUser\Private\CommonSessionSubSystem.cpp">
+      <Filter>Plugins\CommonUser\Source\CommonUser\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Plugins\CommonUser\Source\CommonUser\Private\CommonUser.cpp">
+      <Filter>Plugins\CommonUser\Source\CommonUser\Private</Filter>
+    </ClCompile>
+    <Filter Include="Plugins\CommonUser\Source\CommonUser\Public">
+      <UniqueIdentifier>{2A5F42F9-EE12-3762-8F6F-3EF3B4635964}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Plugins\CommonUser\Source\CommonUser\Public\CommonSessionSubSystem.h">
+      <Filter>Plugins\CommonUser\Source\CommonUser\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Plugins\CommonUser\Source\CommonUser\Public\CommonUser.h">
+      <Filter>Plugins\CommonUser\Source\CommonUser\Public</Filter>
+    </ClInclude>
+    <None Include="..\..\Plugins\CommonUser\CommonUser.uplugin">
+      <Filter>Plugins\CommonUser</Filter>
+    </None>
+    <Filter Include="Plugins\CommonUser\Resources">
+      <UniqueIdentifier>{244EABB8-94D5-3428-81D6-CF7BA7F27A69}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\CommonUser\Resources\Icon128.png">
+      <Filter>Plugins\CommonUser\Resources</Filter>
+    </None>
+    <Filter Include="Plugins\GameFeatures">
+      <UniqueIdentifier>{33C51FE3-4BD4-3B9E-9F42-5CCDEE9DF75F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\GameFeatures\ShooterCore">
+      <UniqueIdentifier>{9EAB060A-4227-3119-B8B8-68E8C17601F7}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\GameFeatures\ShooterCore\ShooterCore.uplugin">
+      <Filter>Plugins\GameFeatures\ShooterCore</Filter>
+    </None>
+    <Filter Include="Plugins\GameFeatures\ShooterCore\Resources">
+      <UniqueIdentifier>{35CA5496-A00E-367E-960B-FED1076F9B4F}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\GameFeatures\ShooterCore\Resources\Icon128.png">
+      <Filter>Plugins\GameFeatures\ShooterCore\Resources</Filter>
+    </None>
+    <Filter Include="Plugins\GameFeatures\ShooterCore\Source">
+      <UniqueIdentifier>{1D5EEBDA-9F49-3806-9C04-D5EF76BEE776}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\GameFeatures\ShooterCore\Source\ShooterCoreRuntime">
+      <UniqueIdentifier>{B7E9F236-F594-3E94-BB6F-72ED7BE2B74B}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\GameFeatures\ShooterCore\Source\ShooterCoreRuntime\ShooterCoreRuntime.Build.cs">
+      <Filter>Plugins\GameFeatures\ShooterCore\Source\ShooterCoreRuntime</Filter>
+    </None>
+    <Filter Include="Plugins\GameFeatures\ShooterCore\Source\ShooterCoreRuntime\Private">
+      <UniqueIdentifier>{DCAF9736-74D5-372C-A975-755C2BFD62B8}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Plugins\GameFeatures\ShooterCore\Source\ShooterCoreRuntime\Private\ShooterCoreRuntimeModule.cpp">
+      <Filter>Plugins\GameFeatures\ShooterCore\Source\ShooterCoreRuntime\Private</Filter>
+    </ClCompile>
+    <Filter Include="Plugins\GameFeatures\ShooterCore\Source\ShooterCoreRuntime\Public">
+      <UniqueIdentifier>{5195F764-EB5C-33AA-A928-76073CD9AAAE}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Plugins\GameFeatures\ShooterCore\Source\ShooterCoreRuntime\Public\ShooterCoreRuntimeModule.h">
+      <Filter>Plugins\GameFeatures\ShooterCore\Source\ShooterCoreRuntime\Public</Filter>
+    </ClInclude>
     <Filter Include="Source\CloneProject">
       <UniqueIdentifier>{B8FB88DE-A955-3655-9911-6B72FFFCD7B6}</UniqueIdentifier>
     </Filter>

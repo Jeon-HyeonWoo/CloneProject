@@ -6,6 +6,8 @@
 #include "Engine/DataAsset.h"
 #include "CloneUserFacingExperience.generated.h"
 
+class UCommonSession_HostSessionRequest;
+
 /**
  * 
  */
@@ -15,6 +17,10 @@ class CLONEPROJECT_API UCloneUserFacingExperience : public UPrimaryDataAsset
 	GENERATED_BODY()
 	
 public:
+
+	//Const값은 BlueprintPure가 되어서 실행단위가 사라지기때문에 BlueprintPure를 False로 만들어 모든 체크를 한 뒤에 실행이 되도록 설정
+	UFUNCTION(BlueprintCallable, BlueprintPure = false)
+	UCommonSession_HostSessionRequest* CreateHostingRequest() const;
 
 	/* the Specific map to load */
 	/*
@@ -52,4 +58,8 @@ public:
 	* Make, BP_ExperienceList3D, BP_TeleportToUserFacingExperience
 	* BP_ExperrienceList3D : ASyncLoad Experience -> Spawn_BP_TeleportToUserFacingExperience
 	* BP_TeleportToUserFacingExperience : this objct make user teleport to other Experience(Map and Mode);
+*/
+
+/*
+	MapID와 ExperienceID를 가지고 있는 UserFacingExperience 가 CommonUser를 사용하게 된다.
 */

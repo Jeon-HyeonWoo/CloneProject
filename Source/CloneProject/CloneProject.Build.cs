@@ -18,7 +18,8 @@ public class CloneProject : ModuleRules
 			"ModularGameplay",	//Game Features // PlugIn
 			"GameFeatures", //
 			"InputCore",
-			"EnhancedInput"
+			"EnhancedInput",
+			"CommonUser" //Custom Moudule for Move to Map
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

@@ -1,6 +1,8 @@
 {
 	"SourceFiles": [
 		"E:\\CloneProject\\Source\\CloneProject\\CloneProject.Build.cs",
+		"E:\\CloneProject\\Plugins\\CommonUser\\Source\\CommonUser\\CommonUser.Build.cs",
+		"E:\\CloneProject\\Plugins\\GameFeatures\\ShooterCore\\Source\\ShooterCoreRuntime\\ShooterCoreRuntime.Build.cs",
 		"E:\\CloneProject\\Source\\CloneProject.Target.cs",
 		"E:\\CloneProject\\Source\\CloneProjectEditor.Target.cs"
 	],

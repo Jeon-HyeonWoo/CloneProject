@@ -12,6 +12,7 @@
 #include "CloneProject/CloneLogChannels.h"
 #include "CloneProject/Character/ClonePawnData.h"
 #include "CloneProject/Character/ClonePawnExtensionComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 ACloneGameModeBase::ACloneGameModeBase()
@@ -124,6 +125,12 @@ void ACloneGameModeBase::HandleMatchAssignmentIfNotExpectingOne()
 
 	UWorld* World = GetWorld();
 
+	if (!ExperienceId.IsValid() && UGameplayStatics::HasOption(OptionsString, TEXT("Experience")))
+	{
+		const FString ExperienceFromOptions = UGameplayStatics::ParseOption(OptionsString, TEXT("Experience"));
+		ExperienceId = FPrimaryAssetId(FPrimaryAssetType(*UCloneExperienceDefinition::StaticClass()->GetName()), FName(*ExperienceFromOptions));
+	}
+	
 	//Default옵션으로 BP_CloneDefaultExperience로 강제 설정, Scan이 가능하도록 Id 설정/ Type, Name
 	if (!ExperienceId.IsValid())
 	{
