@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/GameStateComponent.h"
+#include "GameFeaturePluginOperationResult.h"
 #include "CloneExperienceManagerComponent.generated.h"
 
 class UCloneExperienceDefinition;
@@ -31,6 +32,7 @@ enum class ECloneExperienceLoadState
 {
 	Unload,
 	Loading,
+	LoadingGameFeatures,
 	Loaded,
 	Deactivating,
 };
@@ -51,6 +53,7 @@ public:
 	void ServerSetCurrentExperience(FPrimaryAssetId ExperienceId);
 	void StartExperienceLoad();
 	void OnExperienceLoadComplete();
+	void OnGameFeaturePluginLoadComplete(const UE::GameFeatures::FResult& Result);
 	void OnExperienceFullLoadCompleted();
 	const UCloneExperienceDefinition* GetCurrentExperienceChecked() const;
 
@@ -64,4 +67,8 @@ public:
 
 	/*if Loading is finished, Broadcasting delegate*/
 	FOnCloneExperienceLoaded OnExperienceLoaded;
+
+	/* Activated GameFeature Plugins */
+	int32 NumGameFeaturePluginsLoading = 0;
+	TArray<FString> GameFeaturePlugInURLs;
 };

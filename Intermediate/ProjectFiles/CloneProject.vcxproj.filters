@@ -191,6 +191,12 @@
     <Filter Include="Source\CloneProject\GameModes">
       <UniqueIdentifier>{2800F497-305B-339D-8C07-A22BD99BE428}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\CloneProject\GameModes\CloneExperienceActionSet.cpp">
+      <Filter>Source\CloneProject\GameModes</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\GameModes\CloneExperienceActionSet.h">
+      <Filter>Source\CloneProject\GameModes</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\CloneProject\GameModes\CloneExperienceDefinition.cpp">
       <Filter>Source\CloneProject\GameModes</Filter>
     </ClCompile>

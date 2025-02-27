@@ -6,6 +6,7 @@
 #include "CloneProject/System/CloneAssetManager.h"
 #include "CloneProject/GameModes/CloneExperienceDefinition.h"
 #include "GameFeaturesSubsystemSettings.h"
+#include "GameFeaturesSubsystem.h"
 
 
 
@@ -125,8 +126,59 @@ void UCloneExperienceManagerComponent::OnExperienceLoadComplete()
 {
 	static int32 OnExperienceLoadComplete_FrameNumber = GFrameNumber;
 
+	check(LoadState == ECloneExperienceLoadState::Loading);
+	check(CurrentExperience);
+
+	//이전 활성화 된 GameFeature PlugIn의 URL을 Clear
+	GameFeaturePlugInURLs.Reset();
+
+	auto CollectGameFeaturePluginURLs = [This = this](const UPrimaryDataAsset* Context, const TArray<FString>& FeaturePluginList)
+		{
+			for (const FString& PluginName : FeaturePluginList)
+			{
+				FString PluginURL;
+				//GameFeatureSubsystem : public EngineSubsystem
+				if (UGameFeaturesSubsystem::Get().GetPluginURLByName(PluginName, PluginURL))
+				{
+					This->GameFeaturePlugInURLs.AddUnique(PluginURL);
+				}
+			}
+		};
+
+	//GameFeatureToEnable에 있는 PlugIn만 일단 활성화할 GameFeature Plugin후보군으로 등록
+	CollectGameFeaturePluginURLs(CurrentExperience, CurrentExperience->GameFeaturesToEnable);
+
+	//GameFeaturePluginURLs에 등록된 Plugin을 로딩 및 활성화
+	NumGameFeaturePluginsLoading = GameFeaturePlugInURLs.Num();
+
+	//Num > 0
+	if (NumGameFeaturePluginsLoading)
+	{
+		LoadState = ECloneExperienceLoadState::LoadingGameFeatures;
+		for (const FString& PluginURL : GameFeaturePlugInURLs)
+		{
+			UGameFeaturesSubsystem::Get().LoadAndActivateGameFeaturePlugin(PluginURL, FGameFeaturePluginLoadComplete::CreateUObject(this, &ThisClass::OnGameFeaturePluginLoadComplete));
+		}
+	}
+	else
+	{
+		//해당 함수가 불리는 것은 앞서 보았던 StreamableDelegateDelayHelper에 의해 불림
+		OnExperienceFullLoadCompleted();
+	}
+
 	//향후 Loading할 것이들이 많아지면, 
-	OnExperienceFullLoadCompleted();
+	
+}
+
+void UCloneExperienceManagerComponent::OnGameFeaturePluginLoadComplete(const UE::GameFeatures::FResult& Result)
+{
+	// 매 GameFeature Plugin이 로딩이 될 때, 해당 함수가 콜백으로 불린다.
+	NumGameFeaturePluginsLoading--;
+	if (NumGameFeaturePluginsLoading == 0)
+	{
+		//GmaeFeaturePlugin 로딩이 다 끝났을 경우, 기존대로 Loaded로서, OnExperienceFullLoadCompleted를 호출
+		OnExperienceFullLoadCompleted();
+	}
 }
 
 void UCloneExperienceManagerComponent::OnExperienceFullLoadCompleted()
