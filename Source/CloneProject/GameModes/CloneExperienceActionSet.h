@@ -9,7 +9,7 @@
 class UGameFeatureAction;
 
 /**
- * 
+ * Mode에 따른 Feature의 Action을 맵핑하기 위함 딱 그정도. Definition에서 사용
  */
 UCLASS()
 class CLONEPROJECT_API UCloneExperienceActionSet : public UPrimaryDataAsset

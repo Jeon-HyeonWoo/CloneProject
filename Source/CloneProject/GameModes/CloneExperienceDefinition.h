@@ -7,6 +7,8 @@
 #include "CloneExperienceDefinition.generated.h"
 
 class UClonePawnData;
+class UCloneExperienceActionSet;
+class UGameFeatureAction;
 /**
  * 
  */
@@ -22,9 +24,16 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Gameplay)
 	TObjectPtr<UClonePawnData> DefaultPawnData;
 
-
 	UPROPERTY(EditDefaultsOnly, Category = Gameplay)
 	TArray<FString> GameFeaturesToEnable;
+
+	/* Mode에 따른 분류 */
+	UPROPERTY(EditDefaultsOnly, Category = Gameplay)
+	TArray<TObjectPtr<UCloneExperienceActionSet>> ActionSet;
+
+	/* 일반적인 GameFeatureAction 추가 */
+	UPROPERTY(EditDefaultsOnly, Category = "Actions")
+	TArray<TObjectPtr<UGameFeatureAction>> Actions;
 };
 
 /*

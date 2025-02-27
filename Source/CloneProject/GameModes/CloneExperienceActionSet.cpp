@@ -3,3 +3,6 @@
 
 #include "CloneExperienceActionSet.h"
 
+UCloneExperienceActionSet::UCloneExperienceActionSet()
+{
+}
