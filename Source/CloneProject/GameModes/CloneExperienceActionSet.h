@@ -24,5 +24,4 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Actions to Perform")
 	TArray<TObjectPtr<UGameFeatureAction>> Actions;
 
-
 };

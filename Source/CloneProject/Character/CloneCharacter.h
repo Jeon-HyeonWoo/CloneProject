@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "ModularCharacter.h"
 #include "CloneCharacter.generated.h"
 
 class UClonePawnExtensionComponent;
 class UCloneCameraComponent;
 
 UCLASS()
-class CLONEPROJECT_API ACloneCharacter : public ACharacter
+class CLONEPROJECT_API ACloneCharacter : public AModularCharacter
 {
 	GENERATED_BODY()
 

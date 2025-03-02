@@ -17,6 +17,7 @@
   <ItemGroup>
   <Compile Include="..\..\..\..\Plugins\CommonUser\Source\CommonUser\CommonUser.Build.cs"><Link>Plugins\CommonUser\Source\CommonUser\CommonUser.Build.cs</Link></Compile>
   <Compile Include="..\..\..\..\Plugins\GameFeatures\ShooterCore\Source\ShooterCoreRuntime\ShooterCoreRuntime.Build.cs"><Link>Plugins\GameFeatures\ShooterCore\Source\ShooterCoreRuntime\ShooterCoreRuntime.Build.cs</Link></Compile>
+  <Compile Include="..\..\..\..\Plugins\ModularGameplayActors\Source\ModularGameplayActors\ModularGameplayActors.Build.cs"><Link>Plugins\ModularGameplayActors\Source\ModularGameplayActors\ModularGameplayActors.Build.cs</Link></Compile>
   <Compile Include="..\..\..\..\Source\CloneProject.Target.cs"><Link>Source\CloneProject.Target.cs</Link></Compile>
   <Compile Include="..\..\..\..\Source\CloneProjectEditor.Target.cs"><Link>Source\CloneProjectEditor.Target.cs</Link></Compile>
   <Compile Include="..\..\..\..\Source\CloneProject\CloneProject.Build.cs"><Link>Source\CloneProject\CloneProject.Build.cs</Link></Compile>

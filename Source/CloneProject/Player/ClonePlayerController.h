@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/PlayerController.h"
+#include "ModularPlayerController.h"
 #include "ClonePlayerController.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class CLONEPROJECT_API AClonePlayerController : public APlayerController
+class CLONEPROJECT_API AClonePlayerController : public AModularPlayerController
 {
 	GENERATED_BODY()
 

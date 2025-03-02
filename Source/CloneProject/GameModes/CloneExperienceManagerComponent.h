@@ -33,6 +33,7 @@ enum class ECloneExperienceLoadState
 	Unload,
 	Loading,
 	LoadingGameFeatures,
+	ExecutingActions,
 	Loaded,
 	Deactivating,
 };

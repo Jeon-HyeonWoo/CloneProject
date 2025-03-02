@@ -89,6 +89,18 @@
     <None Include="..\..\Plugins\GameFeatures\ShooterCore\Resources\Icon128.png">
       <Filter>Plugins\GameFeatures\ShooterCore\Resources</Filter>
     </None>
+    <Filter Include="Plugins\ModularGameplayActors">
+      <UniqueIdentifier>{E25759FB-664C-355F-8250-88BB112CE4AF}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\ModularGameplayActors\ModularGameplayActors.uplugin">
+      <Filter>Plugins\ModularGameplayActors</Filter>
+    </None>
+    <Filter Include="Plugins\ModularGameplayActors\Resources">
+      <UniqueIdentifier>{890678FF-BC6A-31BD-81A0-4D84C6398C6D}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\ModularGameplayActors\Resources\Icon128.png">
+      <Filter>Plugins\ModularGameplayActors\Resources</Filter>
+    </None>
     <Filter Include="Plugins\GameFeatures\ShooterCore\Source">
       <UniqueIdentifier>{1D5EEBDA-9F49-3806-9C04-D5EF76BEE776}</UniqueIdentifier>
     </Filter>
@@ -109,6 +121,39 @@
     </Filter>
     <ClInclude Include="..\..\Plugins\GameFeatures\ShooterCore\Source\ShooterCoreRuntime\Public\ShooterCoreRuntimeModule.h">
       <Filter>Plugins\GameFeatures\ShooterCore\Source\ShooterCoreRuntime\Public</Filter>
+    </ClInclude>
+    <Filter Include="Plugins\ModularGameplayActors\Source">
+      <UniqueIdentifier>{D2A7373A-5074-3627-B395-44D580887335}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\ModularGameplayActors\Source\ModularGameplayActors">
+      <UniqueIdentifier>{BB71DF83-D340-3BFB-8444-4117EB3288C8}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\ModularGameplayActors\Source\ModularGameplayActors\ModularGameplayActors.Build.cs">
+      <Filter>Plugins\ModularGameplayActors\Source\ModularGameplayActors</Filter>
+    </None>
+    <Filter Include="Plugins\ModularGameplayActors\Source\ModularGameplayActors\Private">
+      <UniqueIdentifier>{B8B90E7E-AD5A-3B0C-A684-BFAC92E94C5B}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Plugins\ModularGameplayActors\Source\ModularGameplayActors\Private\ModularCharacter.cpp">
+      <Filter>Plugins\ModularGameplayActors\Source\ModularGameplayActors\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Plugins\ModularGameplayActors\Source\ModularGameplayActors\Private\ModularGameplayActors.cpp">
+      <Filter>Plugins\ModularGameplayActors\Source\ModularGameplayActors\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Plugins\ModularGameplayActors\Source\ModularGameplayActors\Private\ModularPlayerController.cpp">
+      <Filter>Plugins\ModularGameplayActors\Source\ModularGameplayActors\Private</Filter>
+    </ClCompile>
+    <Filter Include="Plugins\ModularGameplayActors\Source\ModularGameplayActors\Public">
+      <UniqueIdentifier>{2CE162FB-CFBE-3D0B-A1F3-D84F43D64075}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Plugins\ModularGameplayActors\Source\ModularGameplayActors\Public\ModularCharacter.h">
+      <Filter>Plugins\ModularGameplayActors\Source\ModularGameplayActors\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Plugins\ModularGameplayActors\Source\ModularGameplayActors\Public\ModularGameplayActors.h">
+      <Filter>Plugins\ModularGameplayActors\Source\ModularGameplayActors\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Plugins\ModularGameplayActors\Source\ModularGameplayActors\Public\ModularPlayerController.h">
+      <Filter>Plugins\ModularGameplayActors\Source\ModularGameplayActors\Public</Filter>
     </ClInclude>
     <Filter Include="Source\CloneProject">
       <UniqueIdentifier>{B8FB88DE-A955-3655-9911-6B72FFFCD7B6}</UniqueIdentifier>
@@ -187,6 +232,48 @@
     </ClCompile>
     <ClInclude Include="..\..\Source\CloneProject\Character\ClonePawnExtensionComponent.h">
       <Filter>Source\CloneProject\Character</Filter>
+    </ClInclude>
+    <Filter Include="Source\CloneProject\Cosmetics">
+      <UniqueIdentifier>{6B139FC0-557F-3294-B6BA-CAEB3B405FEA}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\CloneProject\Cosmetics\CloneCharacterPartTypes.cpp">
+      <Filter>Source\CloneProject\Cosmetics</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\Cosmetics\CloneCharacterPartTypes.h">
+      <Filter>Source\CloneProject\Cosmetics</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CloneProject\Cosmetics\CloneControllerComponent_CharacterParts.cpp">
+      <Filter>Source\CloneProject\Cosmetics</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\Cosmetics\CloneControllerComponent_CharacterParts.h">
+      <Filter>Source\CloneProject\Cosmetics</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CloneProject\Cosmetics\CloneCosmeticAnimationTypes.cpp">
+      <Filter>Source\CloneProject\Cosmetics</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\Cosmetics\CloneCosmeticAnimationTypes.h">
+      <Filter>Source\CloneProject\Cosmetics</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CloneProject\Cosmetics\ClonePawnComponent_CharacterParts.cpp">
+      <Filter>Source\CloneProject\Cosmetics</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\Cosmetics\ClonePawnComponent_CharacterParts.h">
+      <Filter>Source\CloneProject\Cosmetics</Filter>
+    </ClInclude>
+    <Filter Include="Source\CloneProject\GameFeatures">
+      <UniqueIdentifier>{F5009082-D580-366F-AA8E-773F5A48877D}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\CloneProject\GameFeatures\GameFeatureAction_AddInputConfig.cpp">
+      <Filter>Source\CloneProject\GameFeatures</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\GameFeatures\GameFeatureAction_AddInputConfig.h">
+      <Filter>Source\CloneProject\GameFeatures</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\CloneProject\GameFeatures\GameFeaturesAction_WorldActionBase.cpp">
+      <Filter>Source\CloneProject\GameFeatures</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\GameFeatures\GameFeaturesAction_WorldActionBase.h">
+      <Filter>Source\CloneProject\GameFeatures</Filter>
     </ClInclude>
     <Filter Include="Source\CloneProject\GameModes">
       <UniqueIdentifier>{2800F497-305B-339D-8C07-A22BD99BE428}</UniqueIdentifier>

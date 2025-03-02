@@ -17,6 +17,7 @@ public class CloneProject : ModuleRules
 			"GameplayTags",	//Game Ability System //PlugIn
 			"ModularGameplay",	//Game Features // PlugIn
 			"GameFeatures", //
+			"ModularGameplayActors",
 			"InputCore",
 			"EnhancedInput",
 			"CommonUser" //Custom Moudule for Move to Map

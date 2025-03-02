@@ -33,6 +33,9 @@ public:
 	/* FeatureName 정의 .cpp에서 */
 	static const FName Name_ActorFeatureName;
 
+	/* Extension Event 이름 정의 */
+	static const FName Name_BindInputsNow;
+
 
 	/* UPawnCompoent Interface */
 	virtual void OnReigster() final;

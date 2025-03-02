@@ -19,8 +19,11 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 
-
+/* FeatureName 정의 : Static Number Variable 초기화 */
 const FName UCloneHeroComponent::Name_ActorFeatureName("HeroComponent");
+
+/* InputConfig의 GameFeatureAction 활성화 ExtensionEvent 이름 */
+const FName UCloneHeroComponent::Name_BindInputsNow("BindInputsNow");
 
 UCloneHeroComponent::UCloneHeroComponent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -271,6 +274,9 @@ void UCloneHeroComponent::InitializePlayerInput(UInputComponent* PlayerInputComp
 		}
 	}
 	
+	// GameFeatureAction_AddInputConfig의 HandlePawnExtension 콜백 함수 전달
+	//(Pawn)한테만 Extension
+	UGameFrameworkComponentManager::SendGameFrameworkComponentExtensionEvent(const_cast<APawn*>(Pawn), Name_BindInputsNow);
 }
 
 void UCloneHeroComponent::Input_Move(const FInputActionValue& InputActionValue)

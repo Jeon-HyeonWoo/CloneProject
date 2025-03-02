@@ -7,6 +7,9 @@
 #include "CloneProject/GameModes/CloneExperienceDefinition.h"
 #include "GameFeaturesSubsystemSettings.h"
 #include "GameFeaturesSubsystem.h"
+#include "CloneExperienceActionSet.h"
+#include "GameFeatureAction.h"
+
 
 
 
@@ -181,9 +184,53 @@ void UCloneExperienceManagerComponent::OnGameFeaturePluginLoadComplete(const UE:
 	}
 }
 
+/*
+* GameFeature의 마지막 Load단계로, Loaded가 완료됐다는 것을 보장받을 수 있다. 따라서 여기서 ExecutingActions단계 활성
+*/
 void UCloneExperienceManagerComponent::OnExperienceFullLoadCompleted()
 {
 	check(LoadState != ECloneExperienceLoadState::Loaded);
+
+	{
+		LoadState = ECloneExperienceLoadState::ExecutingActions;
+
+		FGameFeatureActivatingContext Context;
+		{
+			const FWorldContext* ExistingWorldContext = GEngine->GetWorldContextFromWorld(GetWorld());
+			if (ExistingWorldContext)
+			{
+				//Context에 WorldContext를 넣는다. 어떤 월드인지 설명을 해주기 위해
+				Context.SetRequiredWorldContextHandle(ExistingWorldContext->ContextHandle);
+			}
+		}
+		
+		//Context를 캡쳐하고, Features의 Actions들을 변수로 가진다.
+		auto ActivateListOfActions = [&Context](const TArray<UGameFeatureAction*>& ActionList)
+			{
+				//해당 Actions를 순회하면서
+				for (UGameFeatureAction* Action : ActionList)
+				{
+					if (Action)
+					{
+						//등록, 로딩, 활성화(Context가 필요) -> Action활성화!
+						Action->OnGameFeatureRegistering();
+						Action->OnGameFeatureLoading();
+						Action->OnGameFeatureActivating(Context);
+					}
+				}
+			};
+
+		//1. Experience의 일반 Actions
+		ActivateListOfActions(CurrentExperience->Actions);
+
+		//2. Experience의 ActionSets
+		for (const TObjectPtr<UCloneExperienceActionSet>& ActionSet : CurrentExperience->ActionSet)
+		{
+			ActivateListOfActions(ActionSet->Actions);
+		}
+	}
+
+	
 
 	LoadState = ECloneExperienceLoadState::Loaded;
 
