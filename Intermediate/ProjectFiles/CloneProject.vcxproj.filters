@@ -179,6 +179,15 @@
     <ClInclude Include="..\..\Source\CloneProject\CloneProject.h">
       <Filter>Source\CloneProject</Filter>
     </ClInclude>
+    <Filter Include="Source\CloneProject\AbilitySystem">
+      <UniqueIdentifier>{906F0D97-523E-3B34-A0B0-8D632BD31FDC}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\CloneProject\AbilitySystem\CloneTaggedActor.cpp">
+      <Filter>Source\CloneProject\AbilitySystem</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\AbilitySystem\CloneTaggedActor.h">
+      <Filter>Source\CloneProject\AbilitySystem</Filter>
+    </ClInclude>
     <Filter Include="Source\CloneProject\Camera">
       <UniqueIdentifier>{1989A840-1366-3FCF-AAD2-218DD0CB614B}</UniqueIdentifier>
     </Filter>

@@ -45,6 +45,10 @@ struct FCloneCharacterPartList
 		: OwnerComponent(InOwnerComponent)
 	{}
 
+	bool SpawnActorForEntry(FCloneAppliedCharacterPartEntry& Entry);
+
+	FCloneCharacterPartHandle AddEntry(FCloneCharacterPart NewPart);
+
 	/* 현재 인스턴스화 된 Character Part */
 	UPROPERTY()
 	TArray<FCloneAppliedCharacterPartEntry> Entries;
@@ -64,6 +68,8 @@ class CLONEPROJECT_API UClonePawnComponent_CharacterParts : public UPawnComponen
 public:
 
 	UClonePawnComponent_CharacterParts(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	FCloneCharacterPartHandle AddCharacterPart(const FCloneCharacterPart& NewPart);
 
 	/* Instance화 된 CharacterParts */
 	UPROPERTY()

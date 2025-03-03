@@ -5,6 +5,7 @@
 #include "CloneCharacterPartTypes.h"
 #include "CloneControllerComponent_CharacterParts.generated.h"
 
+class UClonePawnComponent_CharacterParts;
 
 USTRUCT()
 struct FCloneControllerCharacterPartEntry
@@ -28,6 +29,12 @@ class UCloneControllerComponent_CharacterParts : public UControllerComponent
 public:
 
 	UCloneControllerComponent_CharacterParts(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	UClonePawnComponent_CharacterParts* GetPawnCustomizer() const;
+
+	UFUNCTION(BlueprintCallable, Category = Cosmetic)
+	void AddCharacterPart(const FCloneCharacterPart& NewPart);
+	void AddCharacterPartInternal(const FCloneCharacterPart& NewPart);
 
 	UPROPERTY(EditAnywhere, Category = Cosmetics)
 	TArray<FCloneControllerCharacterPartEntry> CharacterParts;

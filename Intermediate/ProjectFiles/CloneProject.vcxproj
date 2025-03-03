@@ -543,6 +543,11 @@
       <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles_3)</ForcedIncludeFiles>
     </ClCompile>
     <ClInclude Include="..\..\Source\CloneProject\CloneProject.h"/>
+    <ClCompile Include="..\..\Source\CloneProject\AbilitySystem\CloneTaggedActor.cpp">
+      <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories_3)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles_3)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\CloneProject\AbilitySystem\CloneTaggedActor.h"/>
     <ClCompile Include="..\..\Source\CloneProject\Camera\CloneCameraComponent.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories_3)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ClCompile_ForcedIncludeFiles_3)</ForcedIncludeFiles>

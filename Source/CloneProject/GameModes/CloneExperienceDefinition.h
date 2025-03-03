@@ -32,7 +32,7 @@ public:
 	TArray<TObjectPtr<UCloneExperienceActionSet>> ActionSet;
 
 	/* 일반적인 GameFeatureAction 추가 */
-	UPROPERTY(EditDefaultsOnly, Category = "Actions")
+	UPROPERTY(EditDefaultsOnly, Instanced, Category = "Actions")
 	TArray<TObjectPtr<UGameFeatureAction>> Actions;
 };
 
