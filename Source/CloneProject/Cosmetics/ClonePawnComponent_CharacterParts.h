@@ -5,6 +5,7 @@
 #include "CloneCosmeticAnimationTypes.h"
 #include "Components/PawnComponent.h"
 #include "ClonePawnComponent_CharacterParts.generated.h"
+#include "D:/Unreal/UE_5.4/Engine/Plugins/Animation/RigLogic/Source/RigLogicLib/Public/dna/layers/Geometry.h"
 
 class UClonePawnComponent_CharacterParts;
 
@@ -68,6 +69,10 @@ class CLONEPROJECT_API UClonePawnComponent_CharacterParts : public UPawnComponen
 public:
 
 	UClonePawnComponent_CharacterParts(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	USkeletalMeshComponent* GetParentMeshComponent() const;
+	USceneComponent* GetSceneComponentToAttachTo() const;
+	void BroadcastChagned();
 
 	FCloneCharacterPartHandle AddCharacterPart(const FCloneCharacterPart& NewPart);
 

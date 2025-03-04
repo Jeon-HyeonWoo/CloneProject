@@ -1,5 +1,6 @@
 
 #include "ClonePawnComponent_CharacterParts.h"
+#include "GameFramework/Character.h"
 
 bool FCloneCharacterPartList::SpawnActorForEntry(FCloneAppliedCharacterPartEntry& Entry)
 {
@@ -77,6 +78,54 @@ FCloneCharacterPartHandle FCloneCharacterPartList::AddEntry(FCloneCharacterPart 
 UClonePawnComponent_CharacterParts::UClonePawnComponent_CharacterParts(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
+}
+
+USkeletalMeshComponent* UClonePawnComponent_CharacterParts::GetParentMeshComponent() const
+{
+	//해당 Class는 PawnCompont을 상속받았기 때문에 Owner는 PawnComponent가 부착되어있는 Pawn
+	if (AActor* OwnerActor = GetOwner())
+	{
+		if (ACharacter* OwningCharacter = Cast<ACharacter>(OwnerActor))
+		{
+			if (USkeletalMeshComponent* MeshComponent = OwningCharacter->GetMesh())
+			{
+				return MeshComponent;
+			}
+		}
+	}
+}
+
+USceneComponent* UClonePawnComponent_CharacterParts::GetSceneComponentToAttachTo() const
+{
+
+	if (USkeletalMeshComponent* MeshComponent = GetParentMeshComponent())
+	{
+		return MeshComponent;
+	}
+	else if (AActor* OwnerActor = GetOwner())	//혹시나 하는 Root Component확인
+	{
+		return OwnerActor->GetRootComponent();
+	}
+
+	return nullptr;
+}
+
+void UClonePawnComponent_CharacterParts::BroadcastChagned()
+{
+	const bool bReinitPose = true;
+
+	if (USkeletalMeshComponent* MeshComponent = GetParentMeshComponent())
+	{
+		const FGameplayTagContainer MergedTags = GetCombinedTags(FGameplayTag());
+		USkeletalMesh* DesiredMesh = BodyMeshes.SelectBestBodyStyle(MergedTags);
+
+		MeshComponent->SetSkeletalMesh(DesiredMesh, bReinitPose);
+
+		if (UPhysicsAsset* PhysicsAsset = BodyMeshes.ForcedPhysicsAsset)
+		{
+			MeshComponent->SetPhysicsAsset(PhysicsAsset, bReinitPose);
+		}
+	}
 }
 
 FCloneCharacterPartHandle UClonePawnComponent_CharacterParts::AddCharacterPart(const FCloneCharacterPart& NewPart)
