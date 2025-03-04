@@ -20,16 +20,30 @@ bool FCloneCharacterPartList::SpawnActorForEntry(FCloneAppliedCharacterPartEntry
 			UChildActorComponent* PartComponent = NewObject<UChildActorComponent>(OwnerComponent->GetOwner());
 			//Pawn's SceneComponent attach, if socket name == none : RootComponent
 			PartComponent->SetupAttachment(ComponentToAttachTo, Entry.Part.SocketName);
-			PartComponent->SetChildActorClass(Entry.Part.PartClass);
 
+			/*
+				SetChildActorClass는 GameThread에서 실행 -> World에 등록이 되지 않았기 때문에 Rendering이 안됨.
+				RegisterComponent는 GameThread와 Render/Physics Thread와 동기화를 진행.
+				Scene Graph에 등록하여 Rendering이 가능하게 함.
+				비유 : 
+				- SetChildActorClass는 Disk에 정보를 담아둔 상태. 
+				- RegisterComponent는 Memory에 올리고(Component 명시적 등록) Cpu에서 계산(Render)하는 과정.
+			*/
+			PartComponent->SetChildActorClass(Entry.Part.PartClass);
+			PartComponent->RegisterComponent();
+
+			//GetChildActor = NewObject_Actor
 			if (AActor* SpawnActor = PartComponent->GetChildActor())
 			{
 				if (USceneComponent* SpawnedRootComponent = SpawnActor->GetRootComponent())
 				{
+					//PartComponent의 OwnerActor보다 Tick이 먼저 활성화 될 것을 우려하여 사용함.
+					//따라서 SpawnedRootComponent(PartActor)가 ComponentToActtachTo(OwnerAcotr)보다 늦게 실행되도록 보장해주세요. 함수
 					SpawnedRootComponent->AddTickPrerequisiteComponent(ComponentToAttachTo);
 				}
 			}
 
+			//Cache Data
 			Entry.SpawnedComponent = PartComponent;
 			bCreatedAnyActor = true;
 		}
