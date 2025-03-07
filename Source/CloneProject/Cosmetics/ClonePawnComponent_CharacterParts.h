@@ -50,6 +50,8 @@ struct FCloneCharacterPartList
 
 	FCloneCharacterPartHandle AddEntry(FCloneCharacterPart NewPart);
 
+	FGameplayTagContainer CollectCombinedTags() const;
+
 	/* 현재 인스턴스화 된 Character Part */
 	UPROPERTY()
 	TArray<FCloneAppliedCharacterPartEntry> Entries;
@@ -72,6 +74,7 @@ public:
 
 	USkeletalMeshComponent* GetParentMeshComponent() const;
 	USceneComponent* GetSceneComponentToAttachTo() const;
+	FGameplayTagContainer GetCombinedTags(FGameplayTag RequiredPrefix) const;
 	void BroadcastChagned();
 
 	FCloneCharacterPartHandle AddCharacterPart(const FCloneCharacterPart& NewPart);

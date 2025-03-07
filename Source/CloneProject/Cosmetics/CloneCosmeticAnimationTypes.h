@@ -36,6 +36,9 @@ struct FCloneAnimBodyStyleSelectionSet
 	/* AnimLayer 적용할 SkeletalMesh를 들고 있음 -> Animation-mesh간 Rules을 MeshRules라고 생각
 	*  = USkeletalMesh + GameplayTag
 	*/
+
+	USkeletalMesh* SelectBestBodyStyle(const FGameplayTagContainer& CosmeticTags) const;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FCloneAnimBodyStyleSelectionEntry> MeshRules;
 

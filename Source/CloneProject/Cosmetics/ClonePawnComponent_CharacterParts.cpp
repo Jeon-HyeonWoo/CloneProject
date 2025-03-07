@@ -1,5 +1,6 @@
 
 #include "ClonePawnComponent_CharacterParts.h"
+#include "GameplayTagAssetInterface.h"
 #include "GameFramework/Character.h"
 
 bool FCloneCharacterPartList::SpawnActorForEntry(FCloneAppliedCharacterPartEntry& Entry)
@@ -74,6 +75,27 @@ FCloneCharacterPartHandle FCloneCharacterPartList::AddEntry(FCloneCharacterPart 
 	return FCloneCharacterPartHandle();
 }
 
+FGameplayTagContainer FCloneCharacterPartList::CollectCombinedTags() const
+{
+	FGameplayTagContainer Result;
+
+	//Instance화된 모든 Part를 Loop
+	for (const FCloneAppliedCharacterPartEntry& Entry : Entries)
+	{
+		//Spawn이 되어있다면, (ChildActor를 Create 했다면,)
+		if (Entry.SpawnedComponent)
+		{
+			//IGameplayTagAssetInterface를 상속받은 Part_Actors들을 가져오고
+			if (IGameplayTagAssetInterface* TagInterface = Cast<IGameplayTagAssetInterface>(Entry.SpawnedComponent->GetChildActor()))
+			{
+				//설정된 GameplayTag를 가져온다.
+				TagInterface->GetOwnedGameplayTags(Result);
+			}
+		}
+	}
+	return Result;
+}
+
 
 UClonePawnComponent_CharacterParts::UClonePawnComponent_CharacterParts(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -110,15 +132,31 @@ USceneComponent* UClonePawnComponent_CharacterParts::GetSceneComponentToAttachTo
 	return nullptr;
 }
 
+FGameplayTagContainer UClonePawnComponent_CharacterParts::GetCombinedTags(FGameplayTag RequiredPrefix) const
+{
+	//CharacterPartList = Instance화 된 PartList의 모든 Tag를 가져온다.
+	FGameplayTagContainer Result = CharacterPartList.CollectCombinedTags();
+	if (RequiredPrefix.IsValid())
+	{
+		return Result.Filter(FGameplayTagContainer(RequiredPrefix));
+	}
+	else
+	{
+		return Result;
+	}
+}
+
 void UClonePawnComponent_CharacterParts::BroadcastChagned()
 {
 	const bool bReinitPose = true;
 
 	if (USkeletalMeshComponent* MeshComponent = GetParentMeshComponent())
 	{
+		//GetTag and Match Tag with mesh, 태그에 맞는 기본 Mesh장착, 없으면 Default
 		const FGameplayTagContainer MergedTags = GetCombinedTags(FGameplayTag());
 		USkeletalMesh* DesiredMesh = BodyMeshes.SelectBestBodyStyle(MergedTags);
 
+		//DesiredMesh 장착
 		MeshComponent->SetSkeletalMesh(DesiredMesh, bReinitPose);
 
 		if (UPhysicsAsset* PhysicsAsset = BodyMeshes.ForcedPhysicsAsset)
