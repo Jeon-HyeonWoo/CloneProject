@@ -54,6 +54,15 @@ bool FCloneCharacterPartList::SpawnActorForEntry(FCloneAppliedCharacterPartEntry
 	return bCreatedAnyActor;
 }
 
+void FCloneCharacterPartList::DestroyActorForEntry(FCloneAppliedCharacterPartEntry& Entry)
+{
+	if (Entry.SpawnedComponent)
+	{
+		Entry.SpawnedComponent->DestroyComponent();
+		Entry.SpawnedComponent = nullptr;
+	}
+}
+
 FCloneCharacterPartHandle FCloneCharacterPartList::AddEntry(FCloneCharacterPart NewPart)
 {
 	//Create Handle
@@ -73,6 +82,19 @@ FCloneCharacterPartHandle FCloneCharacterPartList::AddEntry(FCloneCharacterPart 
 	}
 
 	return FCloneCharacterPartHandle();
+}
+
+void FCloneCharacterPartList::RemoveEntry(FCloneCharacterPartHandle Handle)
+{
+	for (auto EntryIt = Entries.CreateIterator(); EntryIt; ++EntryIt)
+	{
+		FCloneAppliedCharacterPartEntry& Entry = *EntryIt;
+
+		if (Entry.PartHandle == Handle.PartHandle)
+		{
+			DestroyActorForEntry(Entry);
+		}
+	}
 }
 
 FGameplayTagContainer FCloneCharacterPartList::CollectCombinedTags() const
@@ -98,8 +120,9 @@ FGameplayTagContainer FCloneCharacterPartList::CollectCombinedTags() const
 
 
 UClonePawnComponent_CharacterParts::UClonePawnComponent_CharacterParts(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
+	: Super(ObjectInitializer), CharacterPartList(this)
 {
+
 }
 
 USkeletalMeshComponent* UClonePawnComponent_CharacterParts::GetParentMeshComponent() const
@@ -115,6 +138,7 @@ USkeletalMeshComponent* UClonePawnComponent_CharacterParts::GetParentMeshCompone
 			}
 		}
 	}
+	return nullptr;
 }
 
 USceneComponent* UClonePawnComponent_CharacterParts::GetSceneComponentToAttachTo() const
@@ -169,6 +193,11 @@ void UClonePawnComponent_CharacterParts::BroadcastChagned()
 FCloneCharacterPartHandle UClonePawnComponent_CharacterParts::AddCharacterPart(const FCloneCharacterPart& NewPart)
 {
 	return CharacterPartList.AddEntry(NewPart);
+}
+
+void UClonePawnComponent_CharacterParts::RemoveCharacterPart(FCloneCharacterPartHandle Handle)
+{
+	CharacterPartList.RemoveEntry(Handle);
 }
 
 

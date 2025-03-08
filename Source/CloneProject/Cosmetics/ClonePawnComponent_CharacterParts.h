@@ -5,7 +5,6 @@
 #include "CloneCosmeticAnimationTypes.h"
 #include "Components/PawnComponent.h"
 #include "ClonePawnComponent_CharacterParts.generated.h"
-#include "D:/Unreal/UE_5.4/Engine/Plugins/Animation/RigLogic/Source/RigLogicLib/Public/dna/layers/Geometry.h"
 
 class UClonePawnComponent_CharacterParts;
 
@@ -47,8 +46,10 @@ struct FCloneCharacterPartList
 	{}
 
 	bool SpawnActorForEntry(FCloneAppliedCharacterPartEntry& Entry);
+	void DestroyActorForEntry(FCloneAppliedCharacterPartEntry& Entry);
 
 	FCloneCharacterPartHandle AddEntry(FCloneCharacterPart NewPart);
+	void RemoveEntry(FCloneCharacterPartHandle Handle);
 
 	FGameplayTagContainer CollectCombinedTags() const;
 
@@ -78,6 +79,7 @@ public:
 	void BroadcastChagned();
 
 	FCloneCharacterPartHandle AddCharacterPart(const FCloneCharacterPart& NewPart);
+	void RemoveCharacterPart(FCloneCharacterPartHandle Handle);
 
 	/* Instance»≠ µ» CharacterParts */
 	UPROPERTY()

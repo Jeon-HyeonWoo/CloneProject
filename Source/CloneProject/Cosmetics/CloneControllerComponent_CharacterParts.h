@@ -30,11 +30,18 @@ public:
 
 	UCloneControllerComponent_CharacterParts(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
+	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
 	UClonePawnComponent_CharacterParts* GetPawnCustomizer() const;
 
 	UFUNCTION(BlueprintCallable, Category = Cosmetic)
 	void AddCharacterPart(const FCloneCharacterPart& NewPart);
 	void AddCharacterPartInternal(const FCloneCharacterPart& NewPart);
+	void RemoveAllCharacterParts();
+
+	UFUNCTION()
+	void OnPossessedPawnChanged(APawn* OldPawn, APawn* NewPawn);
 
 	UPROPERTY(EditAnywhere, Category = Cosmetics)
 	TArray<FCloneControllerCharacterPartEntry> CharacterParts;
